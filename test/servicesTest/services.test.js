@@ -171,7 +171,7 @@ describe("saveDataIntabels", () => {
     const result = await service.getALLMetricByServerName(payload);
 
     expect(serverNameModel.findOne).toHaveBeenCalledWith({
-      where: { ServerName: payload.serverName },
+      where: { serverName: payload.serverName },
     });
 
     expect(result).toEqual({
