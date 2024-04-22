@@ -1,6 +1,7 @@
 const user = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const secretVariable = require("../utilis/utilis.config");
 const { where } = require("sequelize");
 
 exports.registerService = async (payload) => {
@@ -36,7 +37,7 @@ exports.loginService = async (payload) => {
     if (!passwordMatching) {
       throw new Error("wrong password");
     }
-    const token = jwt.sign({ userId: user.id }, "123", {
+    const token = jwt.sign({ userId: user.id }, secretVariable.secretKey, {
       expiresIn: "1h",
     });
     return { token };

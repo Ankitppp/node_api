@@ -8,6 +8,7 @@ const configVariable = {
   port: process.env.PORT,
   dbmsName: process.env.DBMS_NAME,
   isAllowed: process.env.IS_ALLOWED,
+  secretKey : process.env.SECRET_KEY
 };
 
 module.exports = configVariable;

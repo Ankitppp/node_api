@@ -14,14 +14,32 @@ const {
   deleteServerDetails,
 } = require("../controllers/project.controller");
 
-router.post("/save/dataToTable", validateCreateSchema, saveDataIntabels);
+const auth = require("../middlewares/middlewares.jwtAuth");
 
-router.get("/getAll/metric", validateGetSchema, getALLMetricByServerName);
+router.post(
+  "/save/dataToTable",
+  auth.jwt,
+  validateCreateSchema,
+  saveDataIntabels
+);
 
-router.put("/update/serverName", validateUpdateSchema, updateServerName);
+router.get(
+  "/getAll/metric",
+  auth.jwt,
+  validateGetSchema,
+  getALLMetricByServerName
+);
+
+router.put(
+  "/update/serverName",
+  auth.jwt,
+  validateUpdateSchema,
+  updateServerName
+);
 
 router.delete(
   "/delete/serverDetails",
+  auth.jwt,
   validatedeleteSchema,
   deleteServerDetails
 );
