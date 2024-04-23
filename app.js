@@ -7,6 +7,7 @@ const configVariable = require("./utilis/utilis.config");
 const port = configVariable.port;
 const authRoutes = require("./routes/auth.routes");
 const projectRoutes = require("./Routes/project.routes");
+require("./models/index.model")
 app.use(bodyParser.json());
 app.use(cors());
 app.use("/", projectRoutes);

@@ -2,7 +2,7 @@ const user = require("../models/user.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secretVariable = require("../utilis/utilis.config");
-const { where } = require("sequelize");
+
 
 exports.registerService = async (payload) => {
   try {
@@ -21,7 +21,8 @@ exports.registerService = async (payload) => {
         userName: data.username,
       },
     };
-  } catch (error) {
+  } 
+  catch (error) {
     throw new Error("Regisration failed: " + error.message);
   }
 };
