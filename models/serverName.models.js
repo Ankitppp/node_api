@@ -9,3 +9,4 @@ const Server = sequelize.define("Server", {
 });
 
 module.exports = Server;
+  

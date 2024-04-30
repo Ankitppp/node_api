@@ -2,19 +2,25 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 
 const configVariable = require("./utilis/utilis.config");
 const port = configVariable.port;
 const authRoutes = require("./routes/auth.routes");
 const projectRoutes = require("./Routes/project.routes");
-require("./models/index.model")
+
+require("./models/index.model");
 app.use(bodyParser.json());
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors( 
+//   {
+//   origin: 'http://localhost:5173',
+//   credentials: true
+// }
+));
+app.use(cookieParser());
 app.use("/", projectRoutes);
 app.use("/auth", authRoutes);
-// app.post("/excel", (req, res) => {
-//   res.status(200).json({ message: "succeded is it" });
-// });
 
 const server = app.listen(port, () => {
   console.info(`Node Server Running on port ${port}`);

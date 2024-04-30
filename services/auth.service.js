@@ -3,7 +3,6 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const secretVariable = require("../utilis/utilis.config");
 
-
 exports.registerService = async (payload) => {
   try {
     const { name, userName, email, password } = payload;
@@ -21,8 +20,7 @@ exports.registerService = async (payload) => {
         userName: data.username,
       },
     };
-  } 
-  catch (error) {
+  } catch (error) {
     throw new Error("Regisration failed: " + error.message);
   }
 };

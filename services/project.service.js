@@ -23,7 +23,7 @@ exports.saveDataIntabels = async (payload) => {
         ...payload.metricData,
       },
       { transaction }
-    );
+    ); 
     await transaction.commit();
     return dataValues;
   } catch (error) {
@@ -90,3 +90,38 @@ exports.deleteServerDetails = async (payload) => {
     throw new Error("failed to delete    !!!  " + error.message);
   }
 };
+
+
+exports.upload = async (data) => {
+
+  try 
+  {
+     for(const payload of data)
+     {
+     let serverData = await serverModel.findOne({
+     where: { serverName: payload.Server },
+     });
+     if (!serverData) {
+     serverData = await serverModel.create(
+      { serverName: payload.Server },   
+     );
+     }
+     await metricModel.create(
+     {
+      ServerId: serverData.id,
+      date : payload.Date,
+      month : payload.Month,
+      memoryUtilization: payload['memoryUtilization '],
+      cpuUtilization :   payload['CpuUtilization '],
+      loadAverage: payload.loadAverage,
+      networkTraffic: payload['networkTraffic '],
+      diskOps: payload.diskOps,
+      diskCapacity: payload.diskCapacity,
+     },
+     ); 
+    }
+    return true;
+} catch (error) {
+  throw new Error(error.message);
+}
+}
