@@ -41,7 +41,9 @@ const Metric = sequelize.define("Metric", {
     type: Sequelize.FLOAT,
     allowNull: false,
   },
-});
+  
+}
+);
 
 serverName.hasMany(Metric);
 

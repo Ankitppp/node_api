@@ -10,7 +10,6 @@ exports.saveDataIntabels = async (payload) => {
       where: { serverName: payload.serverName },
       transaction,
     });
-
     if (!serverData) {
       serverData = await serverModel.create(
         { serverName: payload.serverName },
@@ -93,7 +92,6 @@ exports.deleteServerDetails = async (payload) => {
 
 
 exports.upload = async (data) => {
-
   try 
   {
      for(const payload of data)
@@ -101,6 +99,7 @@ exports.upload = async (data) => {
      let serverData = await serverModel.findOne({
      where: { serverName: payload.Server },
      });
+
      if (!serverData) {
      serverData = await serverModel.create(
       { serverName: payload.Server },   
@@ -116,7 +115,7 @@ exports.upload = async (data) => {
       loadAverage: payload.loadAverage,
       networkTraffic: payload['networkTraffic '],
       diskOps: payload.diskOps,
-      diskCapacity: payload.diskCapacity,
+      diskCapacity: payload.diskCapacity
      },
      ); 
     }
