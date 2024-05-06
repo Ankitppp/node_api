@@ -1,4 +1,5 @@
 const express = require("express");
+
 const router = express.Router();
 
 const {
@@ -16,20 +17,20 @@ const {
   upload,
 } = require("../controllers/project.controller");
 
-const auth = require("../middlewares/middlewares.jwtAuth");
+// const { jwt } = require("../middlewares/middlewares.jwtAuth");
 const uploadStorage = require("../middlewares/middlewares.multer");
 
 router.post("/save/dataToTable", validateCreateSchema, saveDataIntabels);
 
-router.post("/upload/excel/file",uploadStorage.single("file"), upload);
-router.post("/getAll/metric",validateGetSchema, getALLMetricByServerName);
+router.post("/upload/excel/file", uploadStorage.single("file"), upload);
+router.post("/getAll/metric", validateGetSchema, getALLMetricByServerName);
 
 router.put("/update/serverName", validateUpdateSchema, updateServerName);
 
 router.delete(
   "/delete/serverDetails",
   validatedeleteSchema,
-  deleteServerDetails
+  deleteServerDetails,
 );
 
 module.exports = router;

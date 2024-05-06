@@ -13,7 +13,7 @@ exports.saveDataIntabels = async (payload) => {
     if (!serverData) {
       serverData = await serverModel.create(
         { serverName: payload.serverName },
-        { transaction }
+        { transaction },
       );
     }
     const { dataValues } = await metricModel.create(
@@ -21,8 +21,8 @@ exports.saveDataIntabels = async (payload) => {
         ServerId: serverData.id,
         ...payload.metricData,
       },
-      { transaction }
-    ); 
+      { transaction },
+    );
     await transaction.commit();
     return dataValues;
   } catch (error) {
@@ -50,7 +50,7 @@ exports.getALLMetricByServerName = async (payload) => {
 
 exports.updateServerName = async (payload) => {
   try {
-    let server = await serverModel.findOne({
+    const server = await serverModel.findOne({
       where: { serverName: payload.oldServerName },
     });
     if (!server) {
@@ -60,7 +60,7 @@ exports.updateServerName = async (payload) => {
     await server.save();
     return server;
   } catch (error) {
-    throw new Error(" Failed !! " + error.message);
+    throw new Error(` Failed !! ${error.message}`);
   }
 };
 
@@ -86,41 +86,38 @@ exports.deleteServerDetails = async (payload) => {
     await transaction.commit();
   } catch (error) {
     if (transaction) await transaction.rollback();
-    throw new Error("failed to delete    !!!  " + error.message);
+    throw new Error(`failed to delete , ${error.message} !!!`);
   }
 };
 
-
 exports.upload = async (data) => {
-  try 
-  {
-     for(const payload of data)
-     {
-     let serverData = await serverModel.findOne({
-     where: { serverName: payload.Server },
-     });
+  try {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const payload of data) {
+      // eslint-disable-next-line no-await-in-loop
+      let serverData = await serverModel.findOne({
+        where: { serverName: payload.Server },
+      });
 
-     if (!serverData) {
-     serverData = await serverModel.create(
-      { serverName: payload.Server },   
-     );
-     }
-     await metricModel.create(
-     {
-      ServerId: serverData.id,
-      date : payload.Date,
-      month : payload.Month,
-      memoryUtilization: payload['memoryUtilization '],
-      cpuUtilization :   payload['CpuUtilization '],
-      loadAverage: payload.loadAverage,
-      networkTraffic: payload['networkTraffic '],
-      diskOps: payload.diskOps,
-      diskCapacity: payload.diskCapacity
-     },
-     ); 
+      if (!serverData) {
+        // eslint-disable-next-line no-await-in-loop
+        serverData = await serverModel.create({ serverName: payload.Server });
+      }
+      // eslint-disable-next-line no-await-in-loop
+      await metricModel.create({
+        ServerId: serverData.id,
+        date: payload.Date,
+        month: payload.Month,
+        memoryUtilization: payload["memoryUtilization "],
+        cpuUtilization: payload["CpuUtilization "],
+        loadAverage: payload.loadAverage,
+        networkTraffic: payload["networkTraffic "],
+        diskOps: payload.diskOps,
+        diskCapacity: payload.diskCapacity,
+      });
     }
     return true;
-} catch (error) {
-  throw new Error(error.message);
-}
-}
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};

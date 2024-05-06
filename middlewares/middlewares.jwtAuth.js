@@ -1,18 +1,15 @@
 const jwt = require("jsonwebtoken");
-const secretKey = require("../utilis/utilis.config").secretKey;
+const { secretKey } = require("../utilis/utilis.config").secretKey;
 
+// eslint-disable-next-line consistent-return
 exports.jwt = (req, res, next) => {
-  console.log(req.cookies)
-  //  const token = req.cookies.value.token
-  const token = null
-  if (!token) {
+  if (!req.cookies.token) {
     return res.status(401).json({
       message: "authroiztion failed",
     });
   }
-
+  const { token } = req.cookies.token.token;
   const user = jwt.verify(token, secretKey);
-  console.log(user)
   req.user = user;
   next();
 };

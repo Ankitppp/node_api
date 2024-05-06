@@ -1,6 +1,7 @@
-const user = require("../models/user.model");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const user = require("../models/user.model");
+
 const secretVariable = require("../utilis/utilis.config");
 
 exports.registerService = async (payload) => {
@@ -8,9 +9,9 @@ exports.registerService = async (payload) => {
     const { name, userName, email, password } = payload;
     const hashPassword = await bcrypt.hash(password, 10);
     const data = await user.create({
-      name: name,
+      name,
       username: userName,
-      email: email,
+      email,
       password: hashPassword,
     });
     return {
@@ -21,7 +22,7 @@ exports.registerService = async (payload) => {
       },
     };
   } catch (error) {
-    throw new Error("Regisration failed: " + error.message);
+    throw new Error(`Regisration failed: ${  error.message}`);
   }
 };
 
@@ -30,7 +31,7 @@ exports.loginService = async (payload) => {
     const { userName, password } = payload;
     const userExist = await user.findOne({ where: { username: userName } });
     if (!userExist) {
-      throw new Error("uses does not exist ! ");
+      throw new Error("uses does not exist !");
     }
     const passwordMatching = await bcrypt.compare(password, userExist.password);
     if (!passwordMatching) {
@@ -41,6 +42,6 @@ exports.loginService = async (payload) => {
     });
     return { token };
   } catch (error) {
-    throw new Error("login failed !!!" + error.message);
+    throw new Error(`login failed !!!${error.message}`);
   }
 };

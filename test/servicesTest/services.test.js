@@ -2,21 +2,29 @@ const service = require("../../services/project.service");
 const serverNameModel = require("../../models/serverName.models");
 const metricNameModel = require("../../models/metric.models");
 
+// eslint-disable-next-line no-undef
 jest.mock("../../models/serverName.models", () => ({
+  // eslint-disable-next-line no-undef
   findOne: jest.fn(),
+  // eslint-disable-next-line no-undef
   create: jest.fn(),
+  // eslint-disable-next-line no-undef
   findByPk: jest.fn(),
 }));
 
+// eslint-disable-next-line no-undef
 jest.mock("../../models/metric.models", () => ({
+  // eslint-disable-next-line no-undef
   create: jest.fn(),
 }));
-  
+
+// eslint-disable-next-line no-undef
 describe("saveDataIntabels", () => {
+  // eslint-disable-next-line no-undef
   it("should create new server and metric", async () => {
     const payload = {
       serverName: "21.31.41.51",
-      metricData: {                                                         
+      metricData: {
         date: "2010-01-01T18:30:00.000Z",
         month: "jan",
         cpuUtilization: 47.7,
@@ -46,9 +54,10 @@ describe("saveDataIntabels", () => {
     });
 
     const result = await service.saveDataIntabels(payload);
+    // eslint-disable-next-line no-undef
     expect(result).toStrictEqual({
       id: 37,
-      ServerId: 20, 
+      ServerId: 20,
       date: "2010-01-01T18:30:00.000Z",
       month: "jan",
       cpuUtilization: 47.7,
@@ -60,6 +69,7 @@ describe("saveDataIntabels", () => {
     });
   });
 
+  // eslint-disable-next-line no-undef
   it("should update existing server with new metric", async () => {
     const payload = {
       serverName: "21.31.41.51",
@@ -72,7 +82,7 @@ describe("saveDataIntabels", () => {
         networkTraffic: 67.5,
         diskOps: 5,
         diskCapacity: 45,
-       },
+      },
     };
 
     serverNameModel.findOne.mockResolvedValue({
@@ -95,6 +105,7 @@ describe("saveDataIntabels", () => {
 
     const result = await service.saveDataIntabels(payload);
 
+    // eslint-disable-next-line no-undef
     expect(result).toEqual({
       id: 37,
       ServerId: 20,
@@ -109,6 +120,7 @@ describe("saveDataIntabels", () => {
     });
   });
 
+  // eslint-disable-next-line no-undef
   it("fetch data from the tabels", async () => {
     const payload = {
       serverName: "21.31.41.51",
@@ -170,10 +182,12 @@ describe("saveDataIntabels", () => {
 
     const result = await service.getALLMetricByServerName(payload);
 
+    // eslint-disable-next-line no-undef
     expect(serverNameModel.findOne).toHaveBeenCalledWith({
       where: { serverName: payload.serverName },
     });
 
+    // eslint-disable-next-line no-undef
     expect(result).toEqual({
       allServerData: {
         id: 20,

@@ -5,6 +5,7 @@ const {
   deleteSchema,
 } = require("../joi/joi.schema");
 
+// eslint-disable-next-line consistent-return
 exports.validateCreateSchema = (req, res, next) => {
   const result = createSchema.validate(req.body);
   if (result.error) {
@@ -15,6 +16,7 @@ exports.validateCreateSchema = (req, res, next) => {
   next();
 };
 
+// eslint-disable-next-line consistent-return
 exports.validateGetSchema = (req, res, next) => {
   const result = getSchema.validate(req.body);
   if (result.error) {
@@ -25,6 +27,7 @@ exports.validateGetSchema = (req, res, next) => {
   next();
 };
 
+// eslint-disable-next-line consistent-return
 exports.validateUpdateSchema = (req, res, next) => {
   const result = updateSchema.validate(req.body);
   if (result.error) {
@@ -35,6 +38,7 @@ exports.validateUpdateSchema = (req, res, next) => {
   next();
 };
 
+// eslint-disable-next-line consistent-return
 exports.validatedeleteSchema = (req, res, next) => {
   const result = deleteSchema.validate(req.body);
   if (result.error) {

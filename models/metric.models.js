@@ -1,7 +1,9 @@
 const Sequelize = require("sequelize");
 
 const sequelize = require("../configs/database.config");
+
 const serverName = require("./serverName.models");
+
 const Metric = sequelize.define("Metric", {
   id: {
     type: Sequelize.INTEGER,
